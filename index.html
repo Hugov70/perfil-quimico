@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil químico</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/media-queries.css">
+</head>
+<body>
+    <h1>Perfil químico</h1>
+    <section id="questoes">
+        <form action="jogo.html">
+            <p>Número de jogadores</p>
+            <p class="p-black">
+                <input type="radio" name="numero-jogadores" id="dois-jogadores" checked> 
+                <label for="dois-jogadores">2</label>
+            </p >
+            <p class="p-black">
+                <input type="radio" name="numero-jogadores" id="tres-jogadores"> 
+                <label for="tres-jogadores">3</label>
+            </p>
+            <p class="p-black">
+                <input type="radio" name="numero-jogadores" id="quatro-jogadores"> 
+                <label for="quatro-jogadores">4</label>
+            </p>
+            <div id="nome-jogadores">
+                <p>
+                    <label for="jogador-um">Nome jogador 1:</label><br>
+                    <input type="text" name="jogador-um" id="jogador-um">
+                </p>
+                <p>
+                    <label for="jogador-dois">Nome jogador 2:</label><br>
+                    <input type="text" name="jogador-dois" id="jogador-dois">
+                </p>
+                <p id="player3">
+                    <label for="jogador-tres">Nome jogador 3:</label><br>
+                    <input type="text" name="jogador-tres" id="jogador-tres">
+                </p>
+                <p id="player4">
+                    <label for="jogador-quatro">Nome jogador 4:</label><br>
+                    <input type="text" name="jogador-quatro" id="jogador-quatro">
+                </p>
+                <input type="submit" value="Avançar" id="avancar">
+            </div>
+        </form>
+        
+
+    </section>
+
+    <script src="assets/js/main.js"></script>
+</html>

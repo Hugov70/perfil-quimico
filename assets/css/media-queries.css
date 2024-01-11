@@ -1,0 +1,9 @@
+@charset "UTF-8";
+
+@media screen and (min-width: 481px) {
+    /*Ipad tablet */
+}
+@media screen and (min-width: 1025px) {
+    /*Desktops, telas grandes */
+}
+
