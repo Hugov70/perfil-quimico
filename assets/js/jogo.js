@@ -57,6 +57,12 @@ document.addEventListener('click', e => {
     const el= e.target;
     console.log(el);
     
+    if (!abrirDica && el.classList.contains('dica')) {
+        msg.innerText = 'Responda primeiro antes de abrir a próxima dica'
+        setTimeout(() => {
+            msg.innerText = ''
+        }, 4000);
+    }
 
     if (abrirDica && el.classList.contains('dica')) {
         showDica(el);
@@ -65,6 +71,8 @@ document.addEventListener('click', e => {
         dica += 1;
     }
 
+
+
     if (el.classList.contains('btn-enviar') && abrirDica) {
         msg.innerText = 'Abra a dica primeiro.'
     }
@@ -72,7 +80,7 @@ document.addEventListener('click', e => {
     if (el.classList.contains('btn-enviar') && !abrirDica && !temVencedor) {
         const res = document.getElementById('res').value;
         if (res === '') {
-            {msg.innerText = 'Preencha o campo de resposta antes de enviar'}
+            msg.innerText = 'Preencha o campo de resposta antes de enviar'
             return
         }
         verificarReposta(); 
@@ -124,28 +132,24 @@ function verificarReposta () {
 }
 
 function passouVez() {
+    abrirDica = true;
     if (vez === 1) {
         vez = 2; 
-        abrirDica = true;
         vezJogadorText();
         return
     };
     if (vez === 2 && playerTres !== '') {
         vez = 3; 
-        abrirDica = true;
         vezJogadorText();
         return
     }
     if (vez === 3 && playerQuatro !== '') {
         vez = 4;
-        abrirDica = true;
-        vezJogadorText(); 
+        vezJogadorText();
         return 
     } else {
-        vez = 1;
-        abrirDica = true;
+        vez = 1; 
         vezJogadorText();
-        return
     }
 }
 
@@ -154,7 +158,7 @@ function avancarCasa () {
     const positionP2 = document.getElementById('playerDois');
     const positionP3 = document.getElementById('playerTres');
     const positionP4 = document.getElementById('playerQuatro');
-
+    dica = 0; 
     if (vez === 1) {
         pontosP1 += 1; 
         leftp1 += 25;
@@ -237,6 +241,7 @@ function showDica(el) {
         if (id === 'dica4') {
             dica4.innerText = carta1.d4;
             passouVez();  
+
         }
         if (id === 'dica5') {
             dica5.innerText = carta1.d5; 
@@ -253,8 +258,8 @@ function showDica(el) {
             dica3.innerText = carta2.d3; 
         }
         if (id === 'dica4') {
+            passouVez();
             dica4.innerText = carta2.d4; 
-            passouVez();  
         }
         if (id === 'dica5') {
             dica5.innerText = carta2.d5; 
@@ -268,8 +273,8 @@ function showDica(el) {
             dica2.innerText = carta3.d2; 
         }
         if (id === 'dica3') {
-            dica3.innerText = carta3.d3; 
             passouVez();  
+            dica3.innerText = carta3.d3; 
         }
         if (id === 'dica4') {
             dica4.innerText = carta3.d4; 
