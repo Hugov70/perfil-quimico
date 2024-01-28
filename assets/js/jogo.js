@@ -38,6 +38,10 @@ const carta3 = new Carta('saponificação', 'Ocorre entre um éster e uma base i
 
 const carta4 = new Carta('hidrogênio', 'Não possui família periódica', 'Combustível para foguetes espaciais ou carros', 'Avance 1 casa', 'Em temperatura ambiente, é um gás', 'Compõe a substância H2O'); 
 
+const carta5 = new Carta('vinagre', 'Em substâncias como água se dissolve', 'Se coloca em salada', 'Elimina manchas e sedimentos resistentes.', 'Atribui gosto e traz aroma aos alimentos', 'Pode ser usado como produto de limpeza');
+
+const carta6 = new Carta('butano', 'Altamente inflamável', ' Seu uso mais famoso no dia a dia é no botijão de gás', 'Caso seja inalado, pode levar até a morte', 'Possui 4 carbonos em sua composição', 'Avance 1 casa');
+
 document.addEventListener("DOMContentLoaded", function() {
     playerUm = localStorage.getItem("player1");
     document.getElementById("pUm").innerHTML =  playerUm;
@@ -84,7 +88,6 @@ function vezJogadorText() {
 };
 
 function verificarReposta () {
-    console.log('Verificando')
     let res = document.getElementById('res'); 
     let nomeCarta; 
     if (dica === 5) {
@@ -100,6 +103,10 @@ function verificarReposta () {
     if (carta === 2) nomeCarta = carta2.nome;
     if (carta === 3) nomeCarta = carta3.nome;
     if (carta === 4) nomeCarta = carta4.nome;
+    if (carta === 5) nomeCarta = carta5.nome;
+    if (carta === 6) nomeCarta = carta6.nome;
+    if (carta === 7) nomeCarta = carta7.nome;
+    if (carta === 8) nomeCarta = carta8.nome;
     if (res.value.toLowerCase() === nomeCarta) {
         res.focus();
         res.innerText = '';
@@ -202,7 +209,7 @@ function voltarPadrao(n) {
 
 function verificarVencedor(n) {
     const p = n;
-    if (pontosP1 === 3 || pontosP2 === 3 || pontosP3 === 3 || pontosP4 === 3) {
+    if (pontosP1 === 5 || pontosP2 === 5 || pontosP3 === 5 || pontosP4 === 5) {
         temVencedor = true;
         alert(`Jogador ${p} venceu!`)
     }
@@ -290,5 +297,43 @@ function showDica(el) {
             dica5.innerText = carta4.d5; 
         }
     }
+    if (carta === 5) {
+        if (id === 'dica1') {
+            dica1.innerText = carta5.d1; 
+        }
+        if (id === 'dica2') {
+            dica2.innerText = carta5.d2; 
+        }
+        if (id === 'dica3') {
+            dica3.innerText = carta5.d3; 
+
+        }
+        if (id === 'dica4') {
+            dica4.innerText = carta5.d4; 
+        5 }
+        if (id === 'dica5') {
+            dica5.innerText = carta5.d5; 
+        }
+    }
+    if (carta === 6) {
+        if (id === 'dica1') {
+            dica1.innerText = carta6.d1; 
+        }
+        if (id === 'dica2') {
+            dica2.innerText = carta6.d2; 
+        }
+        if (id === 'dica3') {
+            dica3.innerText = carta6.d3; 
+
+        }
+        if (id === 'dica4') {
+            dica4.innerText = carta6.d4; 
+        5 }
+        if (id === 'dica5') {
+            avancarCasa(); 
+            dica5.innerText = carta6.d5; 
+        }
+    }
 }
+
 
