@@ -1,5 +1,6 @@
 //jogador avança 25px
-let abrirDica = true; 
+var abrirDica = 1; 
+let podeResponder = 0; 
 let carta = 1; 
 let vez = 1; 
 let dica = 0;
@@ -27,22 +28,23 @@ class Carta {
         this.d3 = dica3;
         this.d4 = dica4;
         this.d5 = dica5;
+        
     }
 }; 
 
-const carta1 = new Carta('petróleo', 'Já houve guerra por conta dele(a)', 'É a principal fonte de renda da economia do Oriente Médio', 'É inflamável', 'Perca sua vez ', 'Está associado a debates sobre poluição ambiental e mudanças climáticas.');
+const carta1 = new Carta('petroleo', 'Já houve guerra por conta dele(a)', 'É a principal fonte de renda da economia do Oriente Médio', 'É inflamável', 'Perca sua vez ', 'Está associado a debates sobre poluição ambiental e mudanças climáticas.');
 
-const carta2 = new Carta('oxigênio', 'Faz parte dos calcogênios na tabela periódica', 'Elemento mais abundante da superfície da Terra.', 'Foi descoberto pelos cientistas Priestley e Scheele e nomeado por Lavoisier.', 'Perca sua vez', 'É liberado pela natureza');
+const carta2 = new Carta('oxigenio', 'Faz parte dos calcogênios na tabela periódica', 'Elemento mais abundante da superfície da Terra.', 'Foi descoberto pelos cientistas Priestley e Scheele e nomeado por Lavoisier.', 'Perca sua vez', 'É liberado pela natureza');
 
-const carta3 = new Carta('saponificação', 'Ocorre entre um éster e uma base inorgânica', 'A última letra do seu nome é O', 'Perca sua vez',  'É utilizada principalmente para fabricação de sabão', 'Desde antes de Cristo, fenícios e romanos já a realizavam');
+const carta3 = new Carta('saponificaçao', 'Ocorre entre um éster e uma base inorgânica', 'A última letra do seu nome é O', 'Perca sua vez',  'É utilizada principalmente para fabricaçao de sabão', 'Desde antes de Cristo, fenícios e romanos já a realizavam');
 
-const carta4 = new Carta('hidrogênio', 'Não possui família periódica', 'Combustível para foguetes espaciais ou carros', 'Avance 1 casa', 'Em temperatura ambiente, é um gás', 'Compõe a substância H2O'); 
+const carta4 = new Carta('hidrogenio', 'Não possui família periódica', 'Combustível para foguetes espaciais ou carros', 'Avance 1 casa', 'Em temperatura ambiente, é um gás', 'Compõe a substância H2O'); 
 
 const carta5 = new Carta('vinagre', 'Em substâncias como água se dissolve', 'Se coloca em salada', 'Elimina manchas e sedimentos resistentes.', 'Atribui gosto e traz aroma aos alimentos', 'Pode ser usado como produto de limpeza');
 
 const carta6 = new Carta('butano', 'Altamente inflamável', ' Seu uso mais famoso no dia a dia é no botijão de gás', 'Caso seja inalado, pode levar até a morte', 'Possui 4 carbonos em sua composição', 'Avance 1 casa');
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", () => {
     playerUm = localStorage.getItem("player1");
     document.getElementById("pUm").innerHTML =  playerUm;
     playerDois = localStorage.getItem("player2");
@@ -55,30 +57,31 @@ document.addEventListener("DOMContentLoaded", function() {
 
 document.addEventListener('click', e => {
     const el= e.target;
-    console.log(el);
-    
-    if (!abrirDica && el.classList.contains('dica')) {
+    console.log(`${abrirDica} 62`);
+    const res = document.getElementById('res').value;
+    if (abrirDica === 0 && el.classList.contains('dica') && res == "") {
         msg.innerText = 'Responda primeiro antes de abrir a próxima dica'
         setTimeout(() => {
             msg.innerText = ''
         }, 4000);
     }
 
-    if (abrirDica && el.classList.contains('dica')) {
-        showDica(el);
-        msg.innerText = ''
-        abrirDica = false; 
+    if (abrirDica === 1 && el.classList.contains('dica') && !el.classList.contains('aberta')) {
+        msg.innerText = '';
+        abrirDica = showDica(el);
+        console.log(abrirDica)
         dica += 1;
     }
 
 
 
-    if (el.classList.contains('btn-enviar') && abrirDica) {
+    if (el.classList.contains('btn-enviar') && abrirDica === 1) {
         msg.innerText = 'Abra a dica primeiro.'
     }
 
-    if (el.classList.contains('btn-enviar') && !abrirDica && !temVencedor) {
-        const res = document.getElementById('res').value;
+    if (el.classList.contains('btn-enviar') && abrirDica === 0 && !temVencedor) {
+        console.log('Chamei')
+        
         if (res === '') {
             msg.innerText = 'Preencha o campo de resposta antes de enviar'
             return
@@ -91,12 +94,21 @@ document.addEventListener('click', e => {
 
 
 function vezJogadorText() {
+    abrirDica = 1; 
     const vezText = document.getElementById('vezJogador');
     vezText.innerHTML = `Vez do jogador ${vez}`
 };
 
+ 
+
+function removerAcentos(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
 function verificarReposta () {
-    let res = document.getElementById('res'); 
+    let resElement = document.getElementById('res');
+    let respostaUsuario = resElement.value;
+    let respostaNormalizada = removerAcentos(respostaUsuario);
     let nomeCarta; 
     if (dica === 5) {
         dica = 0; 
@@ -115,7 +127,7 @@ function verificarReposta () {
     if (carta === 6) nomeCarta = carta6.nome;
     if (carta === 7) nomeCarta = carta7.nome;
     if (carta === 8) nomeCarta = carta8.nome;
-    if (res.value.toLowerCase() === nomeCarta) {
+    if (respostaNormalizada.toLowerCase() === nomeCarta) {
         res.focus();
         res.innerText = '';
         avancarCasa();
@@ -132,11 +144,11 @@ function verificarReposta () {
 }
 
 function passouVez() {
-    abrirDica = true;
+    console.log(`${abrirDica} 147`)
     if (vez === 1) {
         vez = 2; 
         vezJogadorText();
-        return
+        return 
     };
     if (vez === 2 && playerTres !== '') {
         vez = 3; 
@@ -164,7 +176,7 @@ function avancarCasa () {
         leftp1 += 25;
         positionP1.style.left = `${leftp1}px`;
         carta += 1;
-        abrirDica = true;
+        abrirDica = 1;
         tabuleiro.scrollIntoView({ behavior: 'smooth' });
         voltarPadrao(1);
 
@@ -174,7 +186,7 @@ function avancarCasa () {
         leftp2 += 25;
         positionP2.style.left = `${leftp2}px`;
         carta += 1;
-        abrirDica = true;
+        abrirDica = 1;
         tabuleiro.scrollIntoView({ behavior: 'smooth' });
         voltarPadrao(2);
 
@@ -184,7 +196,7 @@ function avancarCasa () {
         leftp3 += 25;
         positionP3.style.left = `${leftp3}px`;
         carta += 1;
-        abrirDica = true;
+        abrirDica = 1;
         tabuleiro.scrollIntoView({ behavior: 'smooth' });
         voltarPadrao(3);
     }
@@ -193,7 +205,7 @@ function avancarCasa () {
         leftp4 += 25;
         positionP4.style.left = `${leftp4}px`;
         carta += 1;
-        abrirDica = true;
+        abrirDica = 1;
         tabuleiro.scrollIntoView({ behavior: 'smooth' });
         voltarPadrao(4);
 
@@ -204,10 +216,15 @@ function avancarCasa () {
 function voltarPadrao(n) {
     const p = n;
     dica1.innerText = 'Dica 1'; 
+    dica1.classList.remove('aberta');
     dica2.innerText = 'Dica 2'; 
+    dica2.classList.remove('aberta');
     dica3.innerText = 'Dica 3'; 
+    dica3.classList.remove('aberta');
     dica4.innerText = 'Dica 4'; 
+    dica4.classList.remove('aberta');
     dica5.innerText = 'Dica 5'; 
+    dica5.classList.remove('aberta');
     verificarVencedor(p);
 }
 
@@ -223,6 +240,7 @@ function verificarVencedor(n) {
 
 function showDica(el) {
     const id = el.id; 
+    el.classList.add('aberta')
     const dica1 = document.getElementById('dica1');
     const dica2 = document.getElementById('dica2');
     const dica3 = document.getElementById('dica3');
@@ -241,7 +259,7 @@ function showDica(el) {
         if (id === 'dica4') {
             dica4.innerText = carta1.d4;
             passouVez();  
-
+            return 1; 
         }
         if (id === 'dica5') {
             dica5.innerText = carta1.d5; 
@@ -338,7 +356,8 @@ function showDica(el) {
             avancarCasa(); 
             dica5.innerText = carta6.d5; 
         }
-    }
+    } 
+    return 0;
 }
 
 

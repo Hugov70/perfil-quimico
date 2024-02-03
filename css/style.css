@@ -1,20 +1,17 @@
-@charset "UTF-8"; 
+@charset "UTF-8";
 /*mobile*/
 
-@import url('https://fonts.googleapis.com/css2?family=Sriracha&family=Ultra&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Sriracha&family=Ultra&display=swap");
 
 :root {
-    --cor-1: #000000; 
+    --cor-1: #000000;
     --cor-2: #333333;
     --cor-3: #575757;
     --cor-4: #808080;
-    --cor-5: #A8A8A8; 
+    --cor-5: #a8a8a8;
     --fonte-principal: Arial, Helvetica, sans-serif;
-    --fonte-titulos: 'Ultra'; 
+    --fonte-titulos: "Ultra";
 }
-
-
-
 
 * {
     margin: 0px;
@@ -26,10 +23,9 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
-    
+
     font-family: var(--fonte-principal);
     color: white;
-    
 }
 
 h1 {
@@ -39,7 +35,7 @@ h1 {
     color: var(--cor-5);
 }
 
-section#questoes {
+#questoes {
     background-color: var(--cor-4);
     padding: 20px 10px;
     border-radius: 10px;
@@ -57,35 +53,35 @@ section form p {
     color: black;
 }
 
-section form p.p-black{
+section form ul {
+    list-style-type: none;
+}
+
+section form .p-black {
+    background-color: black;
     background-image: linear-gradient(to right, var(--cor-1), var(--cor-2));
     margin: 5px 0px;
     color: white;
 }
 
-
-section div#nome-jogadores p label  {
+section .nome-jogador-texto {
     color: var(--cor-1);
 }
 
-section div#nome-jogadores p input[type='text'] {
-   background-image: linear-gradient(to right, var(--cor-1), var(--cor-2));
-   color: white;
+#nome-jogadores input {
+    background-image: linear-gradient(to right, var(--cor-1), var(--cor-2));
+    color: white;
 
-   width: 100%;
-   height: 25px;
+    width: 100%;
+    height: 25px;
+    transition: transform 0.3s;
 }
 
-section div#nome-jogadores p input[type='text']:hover {
+#nome-jogadores input:hover {
     transform: scale(1.05);
-    transition: transform 0.3s ease;
 }
 
-section div #player3, section div #player4 {
-    display: none;
-} 
-
-section div#nome-jogadores input[type='submit'] {
+#avancar {
     display: block;
     margin: auto;
     margin-bottom: 10px;
@@ -95,10 +91,9 @@ section div#nome-jogadores input[type='submit'] {
 
     color: white;
     background-color: var(--cor-1);
-    
+    transition: transform 0.3s;
 }
 
-section div#nome-jogadores input[type='submit']:hover {
+#avancar:hover {
     transform: scale(1.2);
-    transition: transform 0.3s ease;
 }

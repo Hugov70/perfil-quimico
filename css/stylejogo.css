@@ -109,7 +109,7 @@ section div#controle-resposta .btn-enviar {
 }
 
 #tabuleiro {
-    background-image: url(../imagens/tabulerio.png);
+    background-image: url(../assets/imagens/tabulerio.png);
     background-repeat: no-repeat;
     background-size: contain;
     width: 200px;
