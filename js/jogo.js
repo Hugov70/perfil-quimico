@@ -276,8 +276,9 @@ function showDica(el) {
             dica3.innerText = carta2.d3; 
         }
         if (id === 'dica4') {
-            passouVez();
             dica4.innerText = carta2.d4; 
+            passouVez();
+            return 1;
         }
         if (id === 'dica5') {
             dica5.innerText = carta2.d5; 
@@ -290,9 +291,10 @@ function showDica(el) {
         if (id === 'dica2') {
             dica2.innerText = carta3.d2; 
         }
-        if (id === 'dica3') {
-            passouVez();  
+        if (id === 'dica3') { 
             dica3.innerText = carta3.d3; 
+            passouVez(); 
+            return 1;
         }
         if (id === 'dica4') {
             dica4.innerText = carta3.d4; 
