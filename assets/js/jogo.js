@@ -17,9 +17,11 @@ let leftp1 = 8;
 let leftp2 = 8;
 let leftp3 = 8;
 let leftp4 = 8;
+let cartaTxt = document.getElementById('cartaTxt')
 const tabuleiro = document.getElementById('tabuleiro'); 
 const msg = document.getElementById('mensagens');
 
+cartaTxt.innerHTML = `Carta ${carta}`
 class Carta {
     constructor (nome, dica1, dica2, dica3, dica4, dica5) {
         this.nome = nome;
@@ -36,7 +38,7 @@ const carta1 = new Carta('petroleo', 'Já houve guerra por conta dele(a)', 'É a
 
 const carta2 = new Carta('oxigenio', 'Faz parte dos calcogênios na tabela periódica', 'Elemento mais abundante da superfície da Terra.', 'Foi descoberto pelos cientistas Priestley e Scheele e nomeado por Lavoisier.', 'Perca sua vez', 'É liberado pela natureza');
 
-const carta3 = new Carta('saponificaçao', 'Ocorre entre um éster e uma base inorgânica', 'A última letra do seu nome é O', 'Perca sua vez',  'É utilizada principalmente para fabricaçao de sabão', 'Desde antes de Cristo, fenícios e romanos já a realizavam');
+const carta3 = new Carta('saponificacao', 'Ocorre entre um éster e uma base inorgânica', 'A última letra do seu nome é O', 'Perca sua vez',  'É utilizada principalmente para fabricaçao de sabão', 'Desde antes de Cristo, fenícios e romanos já a realizavam');
 
 const carta4 = new Carta('hidrogenio', 'Não possui família periódica', 'Combustível para foguetes espaciais ou carros', 'Avance 1 casa', 'Em temperatura ambiente, é um gás', 'Compõe a substância H2O'); 
 
@@ -57,7 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
 document.addEventListener('click', e => {
     const el= e.target;
-    console.log(`${abrirDica} 62`);
     const res = document.getElementById('res').value;
     if (abrirDica === 0 && el.classList.contains('dica') && res == "") {
         msg.innerText = 'Responda primeiro antes de abrir a próxima dica'
@@ -69,8 +70,9 @@ document.addEventListener('click', e => {
     if (abrirDica === 1 && el.classList.contains('dica') && !el.classList.contains('aberta')) {
         msg.innerText = '';
         abrirDica = showDica(el);
-        console.log(abrirDica)
         dica += 1;
+        res.focus();
+        res.innerText = '';
     }
 
 
@@ -80,8 +82,6 @@ document.addEventListener('click', e => {
     }
 
     if (el.classList.contains('btn-enviar') && abrirDica === 0 && !temVencedor) {
-        console.log('Chamei')
-        
         if (res === '') {
             msg.innerText = 'Preencha o campo de resposta antes de enviar'
             return
@@ -119,7 +119,8 @@ function verificarReposta () {
         }, 500)
    
     }
-    if (carta === 1) nomeCarta = carta1.nome;
+    
+    if (carta === 1) nomeCarta = carta1.nome; 
     if (carta === 2) nomeCarta = carta2.nome;
     if (carta === 3) nomeCarta = carta3.nome;
     if (carta === 4) nomeCarta = carta4.nome;
@@ -127,24 +128,23 @@ function verificarReposta () {
     if (carta === 6) nomeCarta = carta6.nome;
     if (carta === 7) nomeCarta = carta7.nome;
     if (carta === 8) nomeCarta = carta8.nome;
-    if (respostaNormalizada.toLowerCase() === nomeCarta) {
-        res.focus();
-        res.innerText = '';
+    console.log(respostaNormalizada, nomeCarta)
+    if (String(respostaNormalizada.toLowerCase()) === String(nomeCarta)) {
         avancarCasa();
        if (!temVencedor) msg.innerText = `Jogador ${vez} acertou. Vamos para a próxima carta`; 
         setTimeout(() => {
             msg.innerText = ''
-        }, 6000);
+        }, 3000);
 
     } else {
         msg.innerText = 'Errou';
         passouVez(); 
         
     }         
+
 }
 
 function passouVez() {
-    console.log(`${abrirDica} 147`)
     if (vez === 1) {
         vez = 2; 
         vezJogadorText();
@@ -166,6 +166,7 @@ function passouVez() {
 }
 
 function avancarCasa () {
+    
     const positionP1 = document.getElementById('playerUm'); 
     const positionP2 = document.getElementById('playerDois');
     const positionP3 = document.getElementById('playerTres');
@@ -210,6 +211,7 @@ function avancarCasa () {
         voltarPadrao(4);
 
     }
+    cartaTxt.innerHTML = `Carta ${carta}`
     
 }
 
@@ -230,7 +232,7 @@ function voltarPadrao(n) {
 
 function verificarVencedor(n) {
     const p = n;
-    if (pontosP1 === 5 || pontosP2 === 5 || pontosP3 === 5 || pontosP4 === 5) {
+    if (pontosP1 === 4 || pontosP2 === 4 || pontosP3 === 4 || pontosP4 === 4) {
         temVencedor = true;
         alert(`Jogador ${p} venceu!`)
     }
@@ -311,8 +313,12 @@ function showDica(el) {
             dica2.innerText = carta4.d2; 
         }
         if (id === 'dica3') {
-            avancarCasa(); 
             dica3.innerText = carta4.d3; 
+            msg.innerHTML = `Jogador ${vez} avançou uma casa`; 
+            setTimeout (() => {
+                avancarCasa(); 
+            }, 3000)
+            
 
         }
         if (id === 'dica4') {
