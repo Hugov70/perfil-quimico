@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 document.addEventListener('click', e => {
     const el= e.target;
     const res = document.getElementById('res').value;
-    if (abrirDica === 0 && el.classList.contains('dica') && res == "") {
+    if (abrirDica === 0 && el.classList.contains('dica')) {
         msg.innerText = 'Responda primeiro antes de abrir a próxima dica'
         setTimeout(() => {
             msg.innerText = ''
@@ -109,6 +109,7 @@ function verificarReposta () {
     let resElement = document.getElementById('res');
     let respostaUsuario = resElement.value;
     let respostaNormalizada = removerAcentos(respostaUsuario);
+    respostaNormalizada = respostaNormalizada.replace('ç', 'c')
     let nomeCarta; 
     if (dica === 5) {
         dica = 0; 
