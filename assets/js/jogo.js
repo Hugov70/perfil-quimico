@@ -1,8 +1,7 @@
 //jogador avança 25px
 var abrirDica = 1; 
-let podeResponder = 0; 
-let carta = 1; 
-let vez = 1; 
+let carta = 15; 
+export let vez = 1; 
 let dica = 0;
 let temVencedor = false;
 let playerUm;
@@ -19,32 +18,13 @@ let leftp3 = 8;
 let leftp4 = 8;
 let cartaTxt = document.getElementById('cartaTxt')
 const tabuleiro = document.getElementById('tabuleiro'); 
-const msg = document.getElementById('mensagens');
+export const msg = document.getElementById('mensagens');
 
 cartaTxt.innerHTML = `Carta ${carta}`
-class Carta {
-    constructor (nome, dica1, dica2, dica3, dica4, dica5) {
-        this.nome = nome;
-        this.d1 = dica1;
-        this.d2 = dica2;
-        this.d3 = dica3;
-        this.d4 = dica4;
-        this.d5 = dica5;
-        
-    }
-}; 
 
-const carta1 = new Carta('petroleo', 'Já houve guerra por conta dele(a)', 'É a principal fonte de renda da economia do Oriente Médio', 'É inflamável', 'Perca sua vez ', 'Está associado a debates sobre poluição ambiental e mudanças climáticas.');
+import { carta1, carta2, carta3, carta4, carta5, carta6, carta7, carta8, carta9, carta10, carta11, carta12, carta13, carta14, carta15, carta16, carta17} from './cartas.js';
+import showDica from './showDica.js';
 
-const carta2 = new Carta('oxigenio', 'Faz parte dos calcogênios na tabela periódica', 'Elemento mais abundante da superfície da Terra.', 'Foi descoberto pelos cientistas Priestley e Scheele e nomeado por Lavoisier.', 'Perca sua vez', 'É liberado pela natureza');
-
-const carta3 = new Carta('saponificacao', 'Ocorre entre um éster e uma base inorgânica', 'A última letra do seu nome é O', 'Perca sua vez',  'É utilizada principalmente para fabricaçao de sabão', 'Desde antes de Cristo, fenícios e romanos já a realizavam');
-
-const carta4 = new Carta('hidrogenio', 'Não possui família periódica', 'Combustível para foguetes espaciais ou carros', 'Avance 1 casa', 'Em temperatura ambiente, é um gás', 'Compõe a substância H2O'); 
-
-const carta5 = new Carta('vinagre', 'Em substâncias como água se dissolve', 'Se coloca em salada', 'Elimina manchas e sedimentos resistentes.', 'Atribui gosto e traz aroma aos alimentos', 'Pode ser usado como produto de limpeza');
-
-const carta6 = new Carta('butano', 'Altamente inflamável', ' Seu uso mais famoso no dia a dia é no botijão de gás', 'Caso seja inalado, pode levar até a morte', 'Possui 4 carbonos em sua composição', 'Avance 1 casa');
 
 document.addEventListener("DOMContentLoaded", () => {
     playerUm = localStorage.getItem("player1");
@@ -129,7 +109,15 @@ function verificarReposta () {
     if (carta === 6) nomeCarta = carta6.nome;
     if (carta === 7) nomeCarta = carta7.nome;
     if (carta === 8) nomeCarta = carta8.nome;
-    console.log(respostaNormalizada, nomeCarta)
+    if (carta === 9) nomeCarta = carta9.nome;
+    if (carta === 10) nomeCarta = carta10.nome;
+    if (carta === 11) nomeCarta = carta11.nome;
+    if (carta === 12) nomeCarta = carta12.nome;
+    if (carta === 13) nomeCarta = carta13.nome;
+    if (carta === 14) nomeCarta = carta14.nome;
+    if (carta === 15) nomeCarta = carta15.nome;
+    if (carta === 16) nomeCarta = carta16.nome;
+    if (carta === 17) nomeCarta = carta17.nome;
     if (String(respostaNormalizada.toLowerCase()) === String(nomeCarta)) {
         avancarCasa();
        if (!temVencedor) msg.innerText = `Jogador ${vez} acertou. Vamos para a próxima carta`; 
@@ -145,7 +133,7 @@ function verificarReposta () {
 
 }
 
-function passouVez() {
+export function passouVez() {
     if (vez === 1) {
         vez = 2; 
         vezJogadorText();
@@ -166,7 +154,7 @@ function passouVez() {
     }
 }
 
-function avancarCasa () {
+export function avancarCasa () {
     
     const positionP1 = document.getElementById('playerUm'); 
     const positionP2 = document.getElementById('playerDois');
@@ -233,140 +221,17 @@ function voltarPadrao(n) {
 
 function verificarVencedor(n) {
     const p = n;
-    if (pontosP1 === 3 || pontosP2 === 3 || pontosP3 === 3 || pontosP4 === 3) {
+    if (pontosP1 === 6 || pontosP2 === 6 || pontosP3 === 6 || pontosP4 === 6) {
         temVencedor = true;
         alert(`Jogador ${p} venceu!`)
     }
 }
 
 
+export const dica1 = document.getElementById('dica1');
+export const dica2 = document.getElementById('dica2');
+export const dica3 = document.getElementById('dica3');
+export const dica4 = document.getElementById('dica4');
+export const dica5 = document.getElementById('dica5');
 
-function showDica(el) {
-    const id = el.id; 
-    el.classList.add('aberta')
-    const dica1 = document.getElementById('dica1');
-    const dica2 = document.getElementById('dica2');
-    const dica3 = document.getElementById('dica3');
-    const dica4 = document.getElementById('dica4');
-    const dica5 = document.getElementById('dica5');
-    if (carta === 1) {
-        if (id === 'dica1') {
-            dica1.innerText = carta1.d1; 
-        }
-        if (id === 'dica2') {
-            dica2.innerText = carta1.d2; 
-        }
-        if (id === 'dica3') {
-            dica3.innerText = carta1.d3; 
-        }
-        if (id === 'dica4') {
-            dica4.innerText = carta1.d4;
-            passouVez();  
-            return 1; 
-        }
-        if (id === 'dica5') {
-            dica5.innerText = carta1.d5; 
-        }
-    }
-    if (carta === 2) {
-        if (id === 'dica1') {
-            dica1.innerText = carta2.d1; 
-        }
-        if (id === 'dica2') {
-            dica2.innerText = carta2.d2; 
-        }
-        if (id === 'dica3') {
-            dica3.innerText = carta2.d3; 
-        }
-        if (id === 'dica4') {
-            dica4.innerText = carta2.d4; 
-            passouVez();
-            return 1;
-        }
-        if (id === 'dica5') {
-            dica5.innerText = carta2.d5; 
-        }
-    }
-    if (carta === 3) {
-        if (id === 'dica1') {
-            dica1.innerText = carta3.d1; 
-        }
-        if (id === 'dica2') {
-            dica2.innerText = carta3.d2; 
-        }
-        if (id === 'dica3') { 
-            dica3.innerText = carta3.d3; 
-            passouVez(); 
-            return 1;
-        }
-        if (id === 'dica4') {
-            dica4.innerText = carta3.d4; 
-        }
-        if (id === 'dica5') {
-            dica5.innerText = carta3.d5; 
-        }
-    }
-    if (carta === 4) {
-        if (id === 'dica1') {
-            dica1.innerText = carta4.d1; 
-        }
-        if (id === 'dica2') {
-            dica2.innerText = carta4.d2; 
-        }
-        if (id === 'dica3') {
-            dica3.innerText = carta4.d3; 
-            msg.innerHTML = `Jogador ${vez} avançou uma casa`; 
-            setTimeout (() => {
-                avancarCasa(); 
-            }, 3000)
-            
-
-        }
-        if (id === 'dica4') {
-            dica4.innerText = carta4.d4; 
-        }
-        if (id === 'dica5') {
-            dica5.innerText = carta4.d5; 
-        }
-    }
-    if (carta === 5) {
-        if (id === 'dica1') {
-            dica1.innerText = carta5.d1; 
-        }
-        if (id === 'dica2') {
-            dica2.innerText = carta5.d2; 
-        }
-        if (id === 'dica3') {
-            dica3.innerText = carta5.d3; 
-
-        }
-        if (id === 'dica4') {
-            dica4.innerText = carta5.d4; 
-        5 }
-        if (id === 'dica5') {
-            dica5.innerText = carta5.d5; 
-        }
-    }
-    if (carta === 6) {
-        if (id === 'dica1') {
-            dica1.innerText = carta6.d1; 
-        }
-        if (id === 'dica2') {
-            dica2.innerText = carta6.d2; 
-        }
-        if (id === 'dica3') {
-            dica3.innerText = carta6.d3; 
-
-        }
-        if (id === 'dica4') {
-            dica4.innerText = carta6.d4; 
-        5 }
-        if (id === 'dica5') {
-            avancarCasa(); 
-            dica5.innerText = carta6.d5; 
-        }
-    } 
-    return 0;
-}
-
-
+export { carta }
