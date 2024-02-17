@@ -1,6 +1,6 @@
 //jogador avança 25px
 var abrirDica = 1; 
-let carta = 15; 
+let carta = 1; 
 export let vez = 1; 
 let dica = 0;
 let temVencedor = false;
