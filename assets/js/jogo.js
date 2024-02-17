@@ -37,40 +37,42 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("pQuatro").innerHTML =  playerQuatro;
 });
 
-document.addEventListener('click', e => {
-    const el= e.target;
-    const res = document.getElementById('res').value;
-    if (abrirDica === 0 && el.classList.contains('dica')) {
-        msg.innerText = 'Responda primeiro antes de abrir a próxima dica'
-        setTimeout(() => {
-            msg.innerText = ''
-        }, 4000);
-    }
-
-    if (abrirDica === 1 && el.classList.contains('dica') && !el.classList.contains('aberta')) {
-        msg.innerText = '';
-        abrirDica = showDica(el);
-        dica += 1;
-        res.focus();
-        res.innerText = '';
-    }
-
-
-
-    if (el.classList.contains('btn-enviar') && abrirDica === 1) {
-        msg.innerText = 'Abra a dica primeiro.'
-    }
-
-    if (el.classList.contains('btn-enviar') && abrirDica === 0 && !temVencedor) {
-        if (res === '') {
-            msg.innerText = 'Preencha o campo de resposta antes de enviar'
-            return
+if (!temVencedor) {
+    document.addEventListener('click', e => {
+        const el= e.target;
+        const res = document.getElementById('res').value;
+        if (abrirDica === 0 && el.classList.contains('dica')) {
+            msg.innerText = 'Responda primeiro antes de abrir a próxima dica'
+            setTimeout(() => {
+                msg.innerText = ''
+            }, 4000);
         }
-        verificarReposta(); 
-    }
     
-})
-
+        if (abrirDica === 1 && el.classList.contains('dica') && !el.classList.contains('aberta')) {
+            msg.innerText = '';
+            abrirDica = showDica(el);
+            dica += 1;
+            res.focus();
+            res.innerText = '';
+        }
+    
+    
+    
+        if (el.classList.contains('btn-enviar') && abrirDica === 1) {
+            msg.innerText = 'Abra a dica primeiro.'
+        }
+    
+        if (el.classList.contains('btn-enviar') && abrirDica === 0 && !temVencedor) {
+            if (res === '') {
+                msg.innerText = 'Preencha o campo de resposta antes de enviar'
+                return
+            }
+            verificarReposta(); 
+        }
+        
+    })
+    
+}
 
 
 function vezJogadorText() {
@@ -221,7 +223,7 @@ function voltarPadrao(n) {
 
 function verificarVencedor(n) {
     const p = n;
-    if (pontosP1 === 6 || pontosP2 === 6 || pontosP3 === 6 || pontosP4 === 6) {
+    if (pontosP1 === 2 || pontosP2 === 6 || pontosP3 === 6 || pontosP4 === 6) {
         temVencedor = true;
         alert(`Jogador ${p} venceu!`)
     }
