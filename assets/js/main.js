@@ -1,104 +1,75 @@
-const avancar = document.getElementById("avancar");
-const input2Jogadores = document.getElementById("dois-jogadores");
-const input3Jogadores = document.getElementById("tres-jogadores");
-const input4Jogadores = document.getElementById("quatro-jogadores");
-let numberPlayers = 2;
 
-input2Jogadores.addEventListener("click", () => {
-    atualizaListaDeJogadores(2);
-});
-input3Jogadores.addEventListener("click", () => {
-    atualizaListaDeJogadores(3);
-});
-input4Jogadores.addEventListener("click", () => {
-    atualizaListaDeJogadores(4);
-});
-
-avancar.addEventListener("click", (event) => {
-    const player1 = document.getElementById("jogador-1").value;
-    const player2 = document.getElementById("jogador-2").value;
-
-    const elemento = event.target;
-    event.preventDefault();
-    if (
-        elemento.type.toLowerCase() === "submit" &&
-        possoAvancar(numberPlayers)
-    ) {
-        localStorage.setItem("player1", player1);
-        localStorage.setItem("player2", player2);
-        if (numberPlayers > 2 && numberPlayers < 4) {
-            const player3 = document.getElementById("jogador-3");
-            localStorage.setItem("player3", player3);
-        }
-        if (numberPlayers == 4) {
-            const player4 = document.getElementById("jogador-4");
-            localStorage.setItem("player4", player4);
-        }
-        window.location.href = "jogo.html";
+const avancar = document.getElementById('avancar')
+let numberPlayers = 2; 
+avancar.addEventListener('click', e => {
+    const player1 = document.getElementById('jogador-um');
+    const player2 = document.getElementById('jogador-dois');
+    const player3 = document.getElementById('jogador-tres');
+    const player4 = document.getElementById('jogador-quatro');
+    const el = e.target;
+    e.preventDefault()
+    if (el.type.toLowerCase() === 'submit' && possoAvancar(numberPlayers)) {
+        localStorage.setItem('player1', player1.value);
+        localStorage.setItem('player2', player2.value);
+        localStorage.setItem('player3', player3.value);
+        localStorage.setItem('player4', player4.value);
+        window.location.href = 'jogo.html';
+   
+        
     } else {
-        alert(
-            "Preencha todos os campos de nome de jogadores e nomes diferentes porfavor!"
-        );
+        alert('Preencha todos os campos de nome de jogadores')
     }
-});
+})
 
-const atualizaListaDeJogadores = (quantidadeDeJogadores) => {
-    const listaJogadores = document.getElementById("nome-jogadores");
-    numberPlayers = quantidadeDeJogadores;
+document.addEventListener('click', e => {
+    const el = e.target;
+    const txtplayer3 = document.getElementById('player3') ;
+    const txtplayer4 = document.getElementById('player4') ;
 
-    listaJogadores.innerHTML = retornaHtmlDaLista(quantidadeDeJogadores);
-
-    if (quantidadeDeJogadores == 3) {
-        listaJogadores.innerHTML = retornaHtmlDaLista(quantidadeDeJogadores);
-    }
-
-    if (quantidadeDeJogadores == 4) {
-        listaJogadores.innerHTML = retornaHtmlDaLista(quantidadeDeJogadores);
-    }
-};
-
-function retornaHtmlDaLista(quantidade) {
-    let htmlDaLista = "";
-    for (let index = 1; index <= quantidade; index++) {
-        aux = `<li>
-                        <label class="nome-jogador-texto" for="jogador-${index}"
-                            >Nome jogador ${index}:</label
-                        ><br />
-                        <input type="text" name="jogador-${index}" id="jogador-${index}" />
-                    </li>`;
-        htmlDaLista = htmlDaLista + aux;
+    if (el.id === 'dois-jogadores') {
+        txtplayer4.style.display = 'none';
+        txtplayer3.style.display = 'none';
+        numberPlayers = 2; 
     }
 
-    return htmlDaLista;
+    if (el.id === 'tres-jogadores') {
+        txtplayer3.style.display = 'block';
+        txtplayer4.style.display = 'none';
+        numberPlayers = 3; 
+    }
+
+    if (el.id === 'quatro-jogadores') {
+        txtplayer3.style.display = 'block';
+        txtplayer4.style.display = 'block';
+        numberPlayers = 4; 
+    }
+
+    
+})
+
+function possoAvancar(n) {
+    const player1 = document.getElementById('jogador-um');
+    const player2 = document.getElementById('jogador-dois');
+    const player3 = document.getElementById('jogador-tres');
+    const player4 = document.getElementById('jogador-quatro');
+    let np = n; 
+    
+    if (np === 2) {
+        if (player1.value !== '' && player2.value !== '') {
+            return true;
+        }
+    }
+    if (np === 3) {
+        if (player1.value !== '' && player2.value !== '' && player3.value !== '') {
+            return true;
+        }
+    }
+    if (np === 4) {
+        if (player1.value !== '' && player2.value !== '' && player3.value !== '' && player4.value !== '') {
+            return true;
+        }
+    }
+    return false
 }
 
-function possoAvancar(numberPlayers) {
-    const player1 = document.getElementById("jogador-1").value;
-    const player2 = document.getElementById("jogador-2").value;
-    if (numberPlayers == 2) {
-        if (player1 !== "" && player2 !== "") {
-            return true;
-        }
-    }
-    if (numberPlayers == 3) {
-        const player3 = document.getElementById("jogador-3").value;
-        if (player1 !== "" && player2 !== "" && player3 !== "") {
-            return true;
-        }
-    }
-    if (numberPlayers == 4) {
-        const player3 = document.getElementById("jogador-3").value;
-        const player4 = document.getElementById("jogador-4").value;
-        if (
-            player1 !== "" &&
-            player2 !== "" &&
-            player3 !== "" &&
-            player4 !== ""
-        ) {
-            return true;
-        }
-    }
-
-    return false;
-}
 
