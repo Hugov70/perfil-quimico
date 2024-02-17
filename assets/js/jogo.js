@@ -233,7 +233,7 @@ function voltarPadrao(n) {
 
 function verificarVencedor(n) {
     const p = n;
-    if (pontosP1 === 4 || pontosP2 === 4 || pontosP3 === 4 || pontosP4 === 4) {
+    if (pontosP1 === 3 || pontosP2 === 3 || pontosP3 === 3 || pontosP4 === 3) {
         temVencedor = true;
         alert(`Jogador ${p} venceu!`)
     }
